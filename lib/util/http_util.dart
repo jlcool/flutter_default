@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:j10/util/config_util.dart';
+import '../util/config_util.dart';
 import '../api/mock_adapter.dart';
 import '../model/api/response_data.dart';
 import '../util/print_util.dart';

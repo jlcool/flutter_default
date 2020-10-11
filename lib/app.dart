@@ -5,7 +5,7 @@ import 'package:fish_redux/fish_redux.dart' hide performanceMiddleware;
 import 'package:flutter/material.dart' hide Action, Page;
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:j10/util/config_util.dart';
+import 'util/config_util.dart';
 import 'util/chinese_cupertino_localizations.dart';
 import 'util/dialog_util.dart';
 import 'package:jpush_flutter/jpush_flutter.dart';
