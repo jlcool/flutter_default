@@ -1,16 +1,19 @@
 import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
-class _CupertinoLocalizationsDelegate extends LocalizationsDelegate<CupertinoLocalizations> {
+class _CupertinoLocalizationsDelegate
+    extends LocalizationsDelegate<CupertinoLocalizations> {
   const _CupertinoLocalizationsDelegate();
 
   @override
   bool isSupported(Locale locale) => locale.languageCode == 'zh';
 
   @override
-  Future<CupertinoLocalizations> load(Locale locale) => ChineseCupertinoLocalizations.load(locale);
+  Future<CupertinoLocalizations> load(Locale locale) =>
+      ChineseCupertinoLocalizations.load(locale);
 
   @override
   bool shouldReload(_CupertinoLocalizationsDelegate old) => false;
@@ -102,7 +105,8 @@ class ChineseCupertinoLocalizations implements CupertinoLocalizations {
   DatePickerDateOrder get datePickerDateOrder => DatePickerDateOrder.ymd;
 
   @override
-  DatePickerDateTimeOrder get datePickerDateTimeOrder => DatePickerDateTimeOrder.date_time_dayPeriod;
+  DatePickerDateTimeOrder get datePickerDateTimeOrder =>
+      DatePickerDateTimeOrder.date_time_dayPeriod;
 
   @override
   String get anteMeridiemAbbreviation => 'AM';
@@ -150,24 +154,42 @@ class ChineseCupertinoLocalizations implements CupertinoLocalizations {
   ///
   /// This method is typically used to create a [LocalizationsDelegate].
   static Future<CupertinoLocalizations> load(Locale locale) {
-    return SynchronousFuture<CupertinoLocalizations>(ChineseCupertinoLocalizations(locale));
+    return SynchronousFuture<CupertinoLocalizations>(
+        ChineseCupertinoLocalizations(locale));
   }
 
   /// A [LocalizationsDelegate] that uses [DefaultCupertinoLocalizations.load]
   /// to create an instance of this class.
-  static const LocalizationsDelegate<CupertinoLocalizations> delegate = _CupertinoLocalizationsDelegate();
-
-  @override
-  // TODO: implement todayLabel
-  String get todayLabel => null;
+  static const LocalizationsDelegate<CupertinoLocalizations> delegate =
+      _CupertinoLocalizationsDelegate();
 
   @override
   // TODO: implement modalBarrierDismissLabel
   String get modalBarrierDismissLabel => "取消";
 
   @override
-  String tabSemanticsLabel({int tabIndex, int tabCount}) {
+  // TODO: implement searchTextFieldPlaceholderLabel
+  String get searchTextFieldPlaceholderLabel => throw UnimplementedError();
+
+  @override
+  // TODO: implement timerPickerHourLabels
+  List<String> get timerPickerHourLabels => throw UnimplementedError();
+
+  @override
+  // TODO: implement timerPickerMinuteLabels
+  List<String> get timerPickerMinuteLabels => throw UnimplementedError();
+
+  @override
+  // TODO: implement timerPickerSecondLabels
+  List<String> get timerPickerSecondLabels => throw UnimplementedError();
+
+  @override
+  String tabSemanticsLabel({required int tabIndex, required int tabCount}) {
     // TODO: implement tabSemanticsLabel
     throw UnimplementedError();
   }
+
+  @override
+  // TODO: implement todayLabel
+  String get todayLabel => throw UnimplementedError();
 }

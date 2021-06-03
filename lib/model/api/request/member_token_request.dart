@@ -1,6 +1,6 @@
 class MemberTokenRequest {
-  String account;
-  String password;
+  String? account;
+  String? password;
 
   MemberTokenRequest({this.account, this.password});
 

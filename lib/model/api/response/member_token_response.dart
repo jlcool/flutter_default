@@ -1,12 +1,18 @@
 class MemberTokenResponse {
-  int id;
-  String phone;
-  String email;
-  String token;
-  String nickName;
-  int memberType;
+  int? id;
+  String? phone;
+  String? email;
+  String? token;
+  String? nickName;
+  int? memberType;
 
-  MemberTokenResponse({this.id, this.phone,this.email,this.token,this.nickName,this.memberType});
+  MemberTokenResponse(
+      {this.id,
+      this.phone,
+      this.email,
+      this.token,
+      this.nickName,
+      this.memberType});
 
   MemberTokenResponse.fromJson(Map<String, dynamic> json) {
     id = json['id'];

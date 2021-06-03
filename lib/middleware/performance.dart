@@ -1,10 +1,9 @@
-
 import 'package:fish_redux/fish_redux.dart';
 
 /// Middleware for print action dispatch performance by time consuming.
 /// It works on debug mode.
 Middleware<T> performanceMiddleware<T>({String tag = 'redux'}) {
-  return ({Dispatch dispatch, Get<T> getState}) {
+  return ({Dispatch? dispatch, Get<T>? getState}) {
     return (Dispatch next) {
       return isDebug()
           ? (Action action) {

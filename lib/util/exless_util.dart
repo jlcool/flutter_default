@@ -1,7 +1,8 @@
 import 'package:dio/dio.dart';
-import 'print_util.dart';
+
 import '../model/data/exless_data.dart';
 import 'config_util.dart';
+import 'print_util.dart';
 
 enum LogLevel { Trace, Debug, Information, Warning, Error, Critical, None }
 
@@ -18,39 +19,37 @@ class ExlessUtil {
     connectTimeout: 40000,
     receiveTimeout: 120000,
   ))
-    ..interceptors
-        .add(InterceptorsWrapper(onRequest: (RequestOptions options) async {
-      options.headers["Authorization"] =
-          ConfigUtil.EXLESS_AUTHOR;
+    ..interceptors.add(InterceptorsWrapper(onRequest:
+        (RequestOptions options, RequestInterceptorHandler handler) async {
+      options.headers["Authorization"] = ConfigUtil.EXLESS_AUTHOR;
       options.headers["Accept"] = "application/json";
       options.headers["User-Agent"] = "exceptionless/1.0.0.0";
       options.headers["Content-Type"] = "application/json; charset=utf-8";
-      return options;
     }));
   Exless _less = Exless()..data = ExlessData();
 
-  void setUser({String identity, String name}) {
-    _less.data.user = ExlessUser()
+  void setUser({String? identity, String? name}) {
+    _less.data?.user = ExlessUser()
       ..identity = identity
       ..name = name;
   }
 
-  void setUserDescription(String description, {String emailAddress}) {
-    _less.data.userDescription = ExlessUserDescription()
+  void setUserDescription(String description, {String? emailAddress}) {
+    _less.data?.userDescription = ExlessUserDescription()
       ..email_address = emailAddress
       ..description = description;
   }
 
-  void createLog(String message, {String source, LogLevel level}) {
+  void createLog(String message, {String? source, LogLevel? level}) {
     _less.date = DateTime.now().toIso8601String();
     _less.type = "log";
     _less.source = source;
     _less.message = message;
-    _less.data.level = level.toString().split('.').last;
+    _less.data?.level = level.toString().split('.').last;
   }
 
   void setEnvironment() {
-    _less.data.environment = ExlessEnvironment();
+    _less.data?.environment = ExlessEnvironment();
   }
 
   void submit() {

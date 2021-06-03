@@ -1,18 +1,17 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:fish_redux/fish_redux.dart' hide performanceMiddleware;
 import 'package:flutter/material.dart' hide Action, Page;
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'util/config_util.dart';
-import 'util/chinese_cupertino_localizations.dart';
-import 'util/dialog_util.dart';
 import 'package:jpush_flutter/jpush_flutter.dart';
 
 import 'global_store/state.dart';
 import 'global_store/store.dart';
 import 'middleware/performance.dart';
+import 'util/chinese_cupertino_localizations.dart';
+import 'util/config_util.dart';
+import 'util/dialog_util.dart';
 
 /// 创建应用的根 Widget
 /// 1. 创建一个简单的路由，并注册页面
@@ -20,9 +19,9 @@ import 'middleware/performance.dart';
 /// 3. 对所需的页面进行 AOP 的增强
 Widget createApp({homepage}) {
   JPush _jpush = new JPush();
-  
+
   _jpush.setup(
-    appKey:ConfigUtil.JPUSH_APPKEY,
+    appKey: ConfigUtil.JPUSH_APPKEY,
     production: true,
     channel: Platform.isAndroid ? "" : "AppStore",
     debug: isDebug(), // 设置是否打印 debug 日志
@@ -43,7 +42,7 @@ Widget createApp({homepage}) {
     theme: ThemeData(
       primarySwatch: Colors.blue,
     ),
-    home: RouteConfig.routes.buildPage(homepage??RouteConfig.login, null),
+    home: RouteConfig.routes.buildPage(homepage ?? RouteConfig.login, null),
     onGenerateRoute: (RouteSettings settings) {
       //可以在这里添加页面跳转动画
       // if(settings.name=="notify_add")
@@ -98,7 +97,6 @@ class RouteConfig {
   static final AbstractRoutes routes = PageRoutes(
     pages: <String, Page<Object, dynamic>>{
       ///将你的路由名称和页面映射在一起，比如：RouteConfig.homePage : HomePage(),
-      
     },
     visitor: StoreConfig.visitor,
   );
@@ -108,11 +106,11 @@ class RouteConfig {
 class StoreConfig {
   ///全局状态管理
   static _updateState() {
-    return (Object pageState, GlobalState appState) {
+    return (dynamic pageState, GlobalState appState) {
       final GlobalBaseState p = pageState;
 
       if (pageState is Cloneable) {
-        final Object copy = pageState.clone();
+        final dynamic copy = pageState.clone();
         final GlobalBaseState newState = copy;
 
         if (p.store == null) {

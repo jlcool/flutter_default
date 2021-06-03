@@ -4,11 +4,10 @@ import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/material.dart';
 
 abstract class GlobalBaseState {
-  StoreModel store;
+  StoreModel store = StoreModel();
 }
 
 class GlobalState implements GlobalBaseState, Cloneable<GlobalState> {
-
   @override
   GlobalState clone() {
     return GlobalState()..store = store;
@@ -27,19 +26,6 @@ class GlobalState implements GlobalBaseState, Cloneable<GlobalState> {
 ///需要增加字段就在这个实体里面添加就行了
 class StoreModel {
   Color themeColor;
-  String token;
-  int memberId;
-  String nickName;
-  String phone;
-  String email;
-  int memberType;
 
-  StoreModel(
-      {this.themeColor,
-      this.token,
-      this.memberId,
-      this.nickName,
-      this.phone,
-      this.email,
-      this.memberType});
+  StoreModel({this.themeColor = Colors.lightBlue});
 }

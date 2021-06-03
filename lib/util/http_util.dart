@@ -1,12 +1,11 @@
-import 'package:dio/dio.dart';
-import '../util/config_util.dart';
-import '../api/mock_adapter.dart';
-import '../model/api/response_data.dart';
-import '../util/print_util.dart';
-import '../util/sp_util.dart';
 import 'dart:async';
 
+import 'package:dio/dio.dart';
 
+import '../model/api/response_data.dart';
+import '../util/config_util.dart';
+import '../util/print_util.dart';
+import '../util/sp_util.dart';
 import 'dialog_util.dart';
 
 /*
@@ -22,7 +21,7 @@ import 'dialog_util.dart';
 
 class HttpUtils {
   /// global dio object
-  static Dio dio;
+  static Dio? dio;
 
   /// default options
   static const String API_PREFIX = ConfigUtil.API_PREFIX;
@@ -47,17 +46,17 @@ class HttpUtils {
     //   }
     // });
 
-    Dio dio = getInstance();
+    dio = getInstance();
 
     /// 打印请求相关信息：请求地址、请求方式、请求参数
-    printl('请求地址：【' + dio.options.baseUrl + url + '】');
+    printl('请求地址：【' + dio!.options.baseUrl + url + '】');
     printl('请求参数：' + data.toString());
 
-    ResponseData result;
+    ResponseData result = ResponseData();
 
     try {
-      Response response = await dio.request(url,
-          data: data, options: new Options(method: method));
+      Response response = await dio!
+          .request(url, data: data, options: new Options(method: method));
       result = ResponseData.fromJson(response.data);
 
       /// 打印响应相关信息
@@ -81,47 +80,40 @@ class HttpUtils {
           headers: {"user-agent": "dio"},
           contentType: "application/json; charset=utf-8");
       dio = new Dio(option)
-      ..httpClientAdapter=MockAdapter()
-        ..interceptors
-            .add(InterceptorsWrapper(onRequest: (RequestOptions options) {
+        ..interceptors.add(InterceptorsWrapper(onRequest:
+            (RequestOptions options, RequestInterceptorHandler handler) {
           options.headers["Authorization"] = SpUtil.getString("token");
           printl('请求头：$options');
-          return options;
-        }, onResponse: (Response response) async {
+        }, onResponse:
+            (Response response, ResponseInterceptorHandler handler) async {
           if (response.data["code"] == 0) {
-            return response;
           } else {
-            DialogUtil.show(response.data["msg"],onlyRight: true);
+            DialogUtil.show(response.data["msg"], onlyRight: true);
           }
-        }, onError: (DioError e) {
+        }, onError: (DioError e, ErrorInterceptorHandler handler) {
           switch (e.type) {
-            case DioErrorType.CONNECT_TIMEOUT:
-              DialogUtil.show('连接超时',onlyRight: true);
+            case DioErrorType.connectTimeout:
+              DialogUtil.show('连接超时', onlyRight: true);
               break;
-            case DioErrorType.SEND_TIMEOUT:
+            case DioErrorType.sendTimeout:
               // TODO: Handle this case.
               break;
-            case DioErrorType.RECEIVE_TIMEOUT:
+            case DioErrorType.receiveTimeout:
               // TODO: Handle this case.
               break;
-            case DioErrorType.RESPONSE:
+            case DioErrorType.response:
               // TODO: Handle this case.
               break;
-            case DioErrorType.CANCEL:
+            case DioErrorType.cancel:
               // TODO: Handle this case.
               break;
-            case DioErrorType.DEFAULT:
-              DialogUtil.show('访问错误',onlyRight: true);
+            case DioErrorType.other:
+              DialogUtil.show('访问错误', onlyRight: true);
               break;
           }
         }));
     }
 
-    return dio;
-  }
-
-  /// 清空 dio 对象
-  static clear() {
-    dio = null;
+    return dio!;
   }
 }
