@@ -82,7 +82,7 @@ EffectMiddleware<T> _pageAnalyticsMiddleware<T>({String tag = 'redux'}) {
           ScreenUtil.init(ctx.context);
           DialogUtil.init(ctx.context);
         }
-        return effect.call(action, ctx);
+        return effect?.call(action, ctx);
       };
     };
   };
